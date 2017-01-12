@@ -83,11 +83,11 @@ Although KeeAgent is now ready to serve the keys, Git Bash needs to be told abou
 >$ ssh -T git@github.com  
 >Permission denied (publickey).
 
-Go back to KeePass, and click *Tools* > *Options...* and then click the *KeeAgent* tab. Choose to *Show a notification...*, and more importantly check the boxes in the *Cygwin/MSYS Integration* area.  Add a path such as *C:\Temp\cygsocket* and *C:\Temp\syssocket* or any arbitrary file name you want.  This will create socket files, which is a Unix concept - it allows applications to talk to each other through a file.  In this case, Git Bash will communicate with KeePass through one of these two socket files.
+Go back to KeePass, and click *Tools* > *Options...* and then click the *KeeAgent* tab. Choose to *Show a notification...*, and more importantly check the boxes in the *Cygwin/MSYS Integration* area.  Add a path such as *%TEMP%\cygsocket* and *%TEMP%\syssocket* or any arbitrary file name you want.  This will create socket files, which is a Unix concept - it allows applications to talk to each other through a file.  In this case, Git Bash will communicate with KeePass through one of these two socket files.
 
 ![keeagent7](assets/keepass-ssh-key-7.png)  
 
-Again, close and reopen KeePass, then head over to *C:\Temp* or whichever path you specified.  You should see your socket files there. 
+Again, close and reopen KeePass, then head over to *%TEMP%* or whichever path you specified.  You should see your socket files there. 
 
 ![keeagent8](assets/keepass-ssh-key-8.png)  
 
@@ -97,7 +97,7 @@ Using your text editor, or even `vi` in Git Bash, edit/create the `~/.bashrc` fi
 
 Add the following line to it - it will set the `SSH_AUTH_SOCK` environment variable, pointing at the socket file.  This is what Git Bash needs to know. 
 
-    export SSH_AUTH_SOCK="C:\Temp\cyglockfile"
+    export SSH_AUTH_SOCK="/tmp/cyglockfile"
 
 Close and reopen Git Bash.  Then try your test again.  If it works, you should see a message from Github, and a notification that a key was used.  If it doesn't work, try again with the other file (syslockfile) instead.  
 
